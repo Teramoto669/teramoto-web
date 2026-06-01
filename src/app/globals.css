@@ -73,6 +73,7 @@
 /* Target only lightweight, paint-only properties on commonly themed elements to avoid layout jank */
 html.theme-transition,
 html.theme-transition body,
+html.theme-transition body::before,
 html.theme-transition .card,
 html.theme-transition .badge,
 html.theme-transition .section-title,
@@ -132,15 +133,23 @@ html {
 body {
   font-family: var(--font-sans);
   background-color: var(--bg-base);
-  background-image: linear-gradient(var(--bg-overlay), var(--bg-overlay)), url('../image/bg.webp');
-  background-size: cover;
-  background-position: center;
-  background-attachment: fixed;
   color: var(--text-primary);
   line-height: 1.7;
   min-height: 100vh;
   -webkit-font-smoothing: antialiased;
   overflow-x: hidden;
+}
+
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background-color: var(--bg-base);
+  background-image: linear-gradient(var(--bg-overlay), var(--bg-overlay)), url('../image/bg.webp');
+  background-size: cover;
+  background-position: center;
+  z-index: -1;
+  pointer-events: none;
 }
 
 /* ---------- Selection ---------- */
