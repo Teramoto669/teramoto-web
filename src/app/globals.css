@@ -24,8 +24,9 @@
   /* Derived */
   --primary-dark: #004d4d;
   --primary-light: #00a8a8;
-  --accent-dim: rgba(36, 177, 177, 0.15);
+  --accent-dim: rgba(36, 177, 177, 0.10);
   --accent-glow: rgba(36, 177, 177, 0.3);
+  --spotlight-glow: rgba(36, 177, 177, 0.3);
 
   /* Backgrounds */
   --bg-base: #001818;
@@ -97,6 +98,7 @@ html.theme-transition .previewImg {
   --primary-light: #4ba9b3;
   --accent-dim: rgba(53, 133, 142, 0.15);
   --accent-glow: rgba(53, 133, 142, 0.3);
+  --spotlight-glow: rgba(160, 225, 230, 0.35);
 
   /* Backgrounds */
   --bg-base: #E6EEC9;
@@ -228,6 +230,18 @@ img {
 }
 
 /* ---------- Glass Card ---------- */
+.card,
+.badge,
+.btn,
+[class*="skillCard"],
+[class*="Navbar_link"],
+[class*="Navbar_cta"],
+[class*="Navbar_mobileLink"] {
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+}
+
 .card {
   background: var(--accent-dim);
   border: 1px solid var(--border-subtle);
@@ -236,6 +250,38 @@ img {
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
   transition: background 0.3s var(--ease), border-color 0.3s var(--ease), transform 0.3s var(--ease), box-shadow 0.3s var(--ease);
+}
+
+.card::before,
+.badge::before,
+.btn::before,
+[class*="skillCard"]::before,
+[class*="Navbar_link"]::before,
+[class*="Navbar_cta"]::before,
+[class*="Navbar_mobileLink"]::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: radial-gradient(150px circle at var(--mouse-x, 50%) var(--mouse-y, 50%),
+      var(--spotlight-glow),
+      transparent 70%);
+  opacity: 0;
+  transition: opacity 0.4s var(--ease);
+  pointer-events: none;
+  z-index: -1;
+}
+
+.card:hover::before,
+.badge:hover::before,
+.btn:hover::before,
+[class*="skillCard"]:hover::before,
+[class*="Navbar_link"]:hover::before,
+[class*="Navbar_cta"]:hover::before,
+[class*="Navbar_mobileLink"]:hover::before {
+  opacity: 1;
 }
 
 .card:hover {

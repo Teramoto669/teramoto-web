@@ -35,6 +35,7 @@ export const metadata: Metadata = {
 
 import CustomCursor from "@/components/CustomCursor";
 import Particles from "@/components/Particles";
+import SpotlightEffect from "@/components/SpotlightEffect";
 import { ThemeProvider } from "@/components/ThemeProvider";
 
 export default function RootLayout({
@@ -61,6 +62,7 @@ export default function RootLayout({
         <ThemeProvider>
           <Particles />
           <CustomCursor />
+          <SpotlightEffect />
           {children}
         </ThemeProvider>
       </body>
