@@ -73,7 +73,6 @@
 /* Target only lightweight, paint-only properties on commonly themed elements to avoid layout jank */
 html.theme-transition,
 html.theme-transition body,
-html.theme-transition body::before,
 html.theme-transition .card,
 html.theme-transition .badge,
 html.theme-transition .section-title,
@@ -138,18 +137,22 @@ body {
   min-height: 100vh;
   -webkit-font-smoothing: antialiased;
   overflow-x: hidden;
+  position: relative;
 }
 
+/* Fixed background via pseudo-element — avoids mobile background-attachment:fixed bug */
 body::before {
   content: "";
   position: fixed;
   inset: 0;
+  /* 100lvh = large viewport height (navbar hidden) — prevents jump when Chrome navbar shows/hides */
+  height: 100lvh;
+  z-index: -1;
   background-color: var(--bg-base);
   background-image: linear-gradient(var(--bg-overlay), var(--bg-overlay)), url('../image/bg.webp');
   background-size: cover;
   background-position: center;
-  z-index: -1;
-  pointer-events: none;
+  background-repeat: no-repeat;
 }
 
 /* ---------- Selection ---------- */
@@ -510,7 +513,9 @@ img {
     font-size: clamp(1.6rem, 6vw, 2.2rem);
   }
 
-  body {
-    background-position: 95% center;
+  /* Focus on character (right side, upper body) on mobile */
+  body::before {
+    background-position: 95% 25%;
+    background-size: auto 100%;
   }
 }
