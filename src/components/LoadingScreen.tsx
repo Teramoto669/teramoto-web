@@ -116,8 +116,8 @@ function useParticleCanvas(
       cancelAnimationFrame(animId);
       window.removeEventListener("resize", resize);
     };
-  // particleColor is stable per mount — intentionally omit to avoid restart
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // particleColor is stable per mount — intentionally omit to avoid restart
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [canvasRef]);
 }
 
@@ -148,10 +148,10 @@ export default function LoadingScreen() {
     if (!audioRef.current) {
       const audio = new Audio("/bgm.mp3");
       audio.loop = true;
-      audio.volume = 0.4;
+      audio.volume = 0.75;
       audioRef.current = audio;
     }
-    audioRef.current.play().catch(() => {});
+    audioRef.current.play().catch(() => { });
 
     (window as unknown as Record<string, unknown>).__bgmAudio = audioRef.current;
     window.dispatchEvent(new CustomEvent("bgm:start"));
