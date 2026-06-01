@@ -111,7 +111,7 @@
 }
 
 .themeToggle:hover {
-  color: var(--accent);
+  color: var(--text-primary);
   background: var(--bg-glass);
 }
 
@@ -142,9 +142,9 @@
   display: none;
   flex-direction: column;
   justify-content: center;
-  gap: 5px;
-  width: 34px;
-  height: 34px;
+  gap: 4px;
+  width: 32px;
+  height: 32px;
   background: none;
   border: none;
   cursor: pointer;
@@ -340,6 +340,6 @@
   }
 
   .themeToggle {
-    padding: 0.3rem;
+    padding: 0.4rem;
   }
 }
