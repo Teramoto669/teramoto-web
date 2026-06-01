@@ -205,28 +205,16 @@ export default function Projects({ repos }: ProjectsProps) {
           </ScrollReveal>
 
           <ScrollReveal animation="left" delay={100}>
-            <div style={{ display: "flex", gap: 8, alignItems: "center" }}>
-              <a
-                href={`https://github.com/${OWNER}?tab=repositories`}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="btn btn-ghost"
-                aria-label="View all repositories on GitHub"
-              >
-                All Repos
-                <ExternalIcon />
-              </a>
-
-              <button
-                type="button"
-                className="btn btn-ghost"
-                onClick={() => setThumbVersion((v) => v + 1)}
-                aria-label="Refresh project thumbnails"
-                title="Refresh Thumbnails"
-              >
-                Refresh Thumbnails
-              </button>
-            </div>
+            <a
+              href={`https://github.com/${OWNER}?tab=repositories`}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="btn btn-ghost"
+              aria-label="View all repositories on GitHub"
+            >
+              All Repos
+              <ExternalIcon />
+            </a>
           </ScrollReveal>
         </div>
 
