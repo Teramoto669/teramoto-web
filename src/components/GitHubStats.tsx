@@ -131,7 +131,7 @@ export default function GitHubStats({ user }: GitHubStatsProps) {
               <img
                 src={`https://ghchart.rshah.org/${titleColor}/${USERNAME}`}
                 alt={`${user.name ?? USERNAME} GitHub contribution chart`}
-                className={styles.contribImg}
+                className={`${styles.contribImg} ${!isLight ? styles.contribImgDark : ""}`}
                 loading="lazy"
               />
             </div>
