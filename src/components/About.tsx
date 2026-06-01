@@ -1,15 +1,25 @@
 import styles from "./About.module.css";
 import ScrollReveal from "./ScrollReveal";
+import {
+  SiPython,
+  SiTypescript,
+  SiSharp,
+  SiKotlin,
+  SiDart,
+  SiNextdotjs,
+  SiVite,
+  SiFlutter,
+} from "react-icons/si";
 
 const SKILLS = [
-  { name: "Python",     icon: "🐍", category: "Language" },
-  { name: "TypeScript", icon: "🔷", category: "Language" },
-  { name: "C#",         icon: "⚙️",  category: "Language" },
-  { name: "Kotlin",     icon: "🟣", category: "Language" },
-  { name: "Dart",       icon: "💙", category: "Language" },
-  { name: "Next.js",    icon: "▲",  category: "Framework" },
-  { name: "Vite",       icon: "⚡", category: "Framework" },
-  { name: "Flutter",    icon: "🦋", category: "Framework" },
+  { name: "Python", icon: <SiPython size={20} aria-hidden="true" />, category: "Language" },
+  { name: "TypeScript", icon: <SiTypescript size={20} aria-hidden="true" />, category: "Language" },
+  { name: "C#", icon: <SiSharp size={20} aria-hidden="true" />, category: "Language" },
+  { name: "Kotlin", icon: <SiKotlin size={20} aria-hidden="true" />, category: "Language" },
+  { name: "Dart", icon: <SiDart size={20} aria-hidden="true" />, category: "Language" },
+  { name: "Next.js", icon: <SiNextdotjs size={20} aria-hidden="true" />, category: "Framework" },
+  { name: "Vite", icon: <SiVite size={20} aria-hidden="true" />, category: "Framework" },
+  { name: "Flutter", icon: <SiFlutter size={20} aria-hidden="true" />, category: "Framework" },
 ];
 
 const TOOLS = [

@@ -61,6 +61,28 @@
   --shadow-glow: 0 0 40px rgba(36, 177, 177, 0.15);
 }
 
+/* ---------- Theme Transition (enabled only during theme change) ---------- */
+@media (prefers-reduced-motion: reduce) {
+  html.theme-transition * { transition: none !important; }
+}
+
+/* Target only lightweight, paint-only properties on commonly themed elements to avoid layout jank */
+html.theme-transition,
+html.theme-transition body,
+html.theme-transition .card,
+html.theme-transition .badge,
+html.theme-transition .section-title,
+html.theme-transition .section-subtitle,
+html.theme-transition .section-label,
+html.theme-transition .skillCard,
+html.theme-transition .skillIcon,
+html.theme-transition .contactCard,
+html.theme-transition .contactIcon,
+html.theme-transition .previewImg {
+  transition: background-color 0.32s var(--ease), color 0.32s var(--ease), border-color 0.32s var(--ease), fill 0.32s var(--ease), stroke 0.32s var(--ease);
+  will-change: background-color, color, border-color, fill, stroke;
+}
+
 [data-theme="light"] {
   /* Brand Colors */
   --primary:    #35858E;

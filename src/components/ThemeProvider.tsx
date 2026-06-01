@@ -20,6 +20,7 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
     const savedTheme = localStorage.getItem("theme") as Theme | null;
     if (savedTheme) {
       setTheme(savedTheme);
+      document.documentElement.setAttribute("data-theme", savedTheme);
     }
   }, []);
 
@@ -27,7 +28,12 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
     const newTheme = theme === "dark" ? "light" : "dark";
     setTheme(newTheme);
     localStorage.setItem("theme", newTheme);
+    // apply attribute and enable transition class briefly
+    document.documentElement.classList.add("theme-transition");
     document.documentElement.setAttribute("data-theme", newTheme);
+    window.setTimeout(() => {
+      document.documentElement.classList.remove("theme-transition");
+    }, 400);
   };
 
   return (
