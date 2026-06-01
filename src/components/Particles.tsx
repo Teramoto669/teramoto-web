@@ -154,8 +154,10 @@ export default function Particles() {
 
     const initParticles = () => {
       particles = [];
-      // Slightly denser for both modes
-      const density = theme === "light" ? 9000 : 10000;
+      const isMobile = window.innerWidth <= 768;
+      // Slightly denser for both modes, but lower particle count on mobile to save CPU
+      const baseDensity = theme === "light" ? 9000 : 10000;
+      const density = isMobile ? baseDensity * 2 : baseDensity;
       const count = Math.floor((window.innerWidth * window.innerHeight) / density);
       for (let i = 0; i < count; i++) {
         particles.push(new Particle());
@@ -164,6 +166,7 @@ export default function Particles() {
 
     const connectParticles = () => {
       const maxDist = 120;
+      const maxDistSq = maxDist * maxDist;
       const isLight = theme === "light";
 
       for (let a = 0; a < particles.length; a++) {
@@ -173,9 +176,10 @@ export default function Particles() {
 
           const dx = pA.x - pB.x;
           const dy = pA.y - pB.y;
-          const dist = Math.sqrt(dx * dx + dy * dy);
+          const distSq = dx * dx + dy * dy;
 
-          if (dist < maxDist) {
+          if (distSq < maxDistSq) {
+            const dist = Math.sqrt(distSq);
             // If either particle is being pushed, suppress the line
             const maxPush = Math.max(pA.pushRatio, pB.pushRatio);
 
@@ -232,13 +236,18 @@ export default function Particles() {
       animationFrameId = requestAnimationFrame(animate);
     };
 
+    // Defer initialization slightly to let CSS transitions start smoothly
+    const startTimeout = setTimeout(() => {
+      resize();
+      animate();
+    }, 50);
+
     window.addEventListener("resize", resize);
     window.addEventListener("mousemove", onMouseMove);
     window.addEventListener("mouseleave", onMouseLeave);
-    resize();
-    animate();
 
     return () => {
+      clearTimeout(startTimeout);
       window.removeEventListener("resize", resize);
       window.removeEventListener("mousemove", onMouseMove);
       window.removeEventListener("mouseleave", onMouseLeave);

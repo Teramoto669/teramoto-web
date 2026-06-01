@@ -3,7 +3,7 @@
    ============================================================ */
 
 /* ---------- Google Fonts & Reset ---------- */
-@import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap");
+/* Fonts are loaded via next/font/google in layout.tsx */
 
 *,
 *::before,
@@ -49,8 +49,8 @@
   --section-pad: 4rem;
 
   /* Typography */
-  --font-sans: "Inter", system-ui, sans-serif;
-  --font-mono: "JetBrains Mono", "Fira Code", monospace;
+  --font-sans: var(--font-inter), system-ui, sans-serif;
+  --font-mono: var(--font-mono), "Fira Code", monospace;
 
   /* Transitions */
   --ease: cubic-bezier(0.4, 0, 0.2, 1);
@@ -83,7 +83,6 @@ html.theme-transition .contactCard,
 html.theme-transition .contactIcon,
 html.theme-transition .previewImg {
   transition: background-color 0.32s var(--ease), color 0.32s var(--ease), border-color 0.32s var(--ease), fill 0.32s var(--ease), stroke 0.32s var(--ease);
-  will-change: background-color, color, border-color, fill, stroke;
 }
 
 [data-theme="light"] {

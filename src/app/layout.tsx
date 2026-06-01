@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import { Inter, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
 
 const inter = Inter({
@@ -8,15 +8,21 @@ const inter = Inter({
   display: "swap",
 });
 
+const jetbrainsMono = JetBrains_Mono({
+  subsets: ["latin"],
+  variable: "--font-mono",
+  display: "swap",
+});
+
 export const metadata: Metadata = {
   title: "Rezha Shahidzinda — Portfolio",
   description:
-    "Informatics Engineering Student | Modder — Python, Next.js, Vite, TypeScript, C#, Kotlin, Flutter",
+    "Computer Science Student | Modder — Python, Next.js, Vite, TypeScript, C#, Kotlin, Flutter",
   keywords: [
     "Rezha Shahidzinda",
     "portfolio",
     "developer",
-    "informatics",
+    "Computer Science",
     "Teramoto669",
   ],
   authors: [{ name: "Rezha Shahidzinda" }],
@@ -37,7 +43,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={inter.variable} suppressHydrationWarning>
+    <html lang="en" className={`${inter.variable} ${jetbrainsMono.variable}`} suppressHydrationWarning>
       <head>
         <script
           dangerouslySetInnerHTML={{

@@ -104,6 +104,8 @@ export default function GitHubStats({ user }: GitHubStatsProps) {
                 alt={`${user.name ?? USERNAME} GitHub stats`}
                 className={styles.statsImg}
                 loading="lazy"
+                width={450}
+                height={195}
               />
             </div>
           </ScrollReveal>
@@ -117,6 +119,8 @@ export default function GitHubStats({ user }: GitHubStatsProps) {
                 alt={`${user.name ?? USERNAME} most used languages`}
                 className={styles.statsImg}
                 loading="lazy"
+                width={300}
+                height={165}
               />
             </div>
           </ScrollReveal>
@@ -133,6 +137,8 @@ export default function GitHubStats({ user }: GitHubStatsProps) {
                 alt={`${user.name ?? USERNAME} GitHub contribution chart`}
                 className={`${styles.contribImg} ${!isLight ? styles.contribImgDark : ""}`}
                 loading="lazy"
+                width={800}
+                height={120}
               />
             </div>
           </div>
@@ -148,6 +154,8 @@ export default function GitHubStats({ user }: GitHubStatsProps) {
               alt={`${user.name ?? USERNAME} GitHub streak stats`}
               className={styles.streakImg}
               loading="lazy"
+              width={495}
+              height={195}
             />
           </div>
         </ScrollReveal>

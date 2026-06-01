@@ -121,11 +121,13 @@
   display: block;
   border-radius: 0;
   min-width: 500px;
+  mix-blend-mode: multiply;
 }
 
 /* Dark mode: invert white empty cells to dark, keep teal accent hues intact */
 .contribImgDark {
   filter: invert(1) hue-rotate(155deg) brightness(0.85) saturate(1.4);
+  mix-blend-mode: normal;
 }
 
 /* Streak */
