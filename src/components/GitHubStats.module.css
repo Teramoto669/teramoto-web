@@ -1,0 +1,151 @@
+/* GitHubStats.module.css */
+
+.sectionHead {
+  margin-bottom: 3rem;
+}
+
+/* Stat Cards */
+.statCards {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1rem;
+  margin-bottom: 3rem;
+}
+
+.statCard {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 0.5rem;
+  padding: 1.5rem 1rem;
+  cursor: default;
+}
+
+.statIconWrap {
+  width: 48px;
+  height: 48px;
+  border-radius: 0;
+  background: var(--accent-dim);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--accent);
+  margin-bottom: 0.25rem;
+}
+
+.statValue {
+  font-size: 2rem;
+  font-weight: 900;
+  color: var(--text-primary);
+  letter-spacing: -0.03em;
+  line-height: 1;
+}
+
+.statLabel {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+/* Stats Images */
+.statsImages {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+.statsImgWrap {
+  background: var(--accent-dim);
+  border: 1px solid var(--border-subtle);
+  border-radius: 0;
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  transition: border-color 0.3s ease;
+  height: 100%;
+}
+
+.statsImgWrap:hover { border-color: var(--border-medium); }
+
+.imgTitle {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-family: var(--font-mono);
+}
+
+.statsImg {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  object-position: center;
+  display: block;
+}
+
+/* Contribution Graph */
+.contribWrap {
+  margin-bottom: 2rem;
+}
+
+.contribTitle {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-family: var(--font-mono);
+  margin-bottom: 1rem;
+}
+
+.contribCard {
+  background: var(--accent-dim);
+  border: 1px solid var(--border-subtle);
+  border-radius: 0;
+  padding: 1.75rem 1.5rem;
+  overflow-x: auto;
+  transition: border-color 0.3s ease;
+}
+
+.contribCard:hover { border-color: var(--border-medium); }
+
+.contribImg {
+  width: 100%;
+  height: auto;
+  display: block;
+  border-radius: 0;
+  min-width: 500px;
+}
+
+/* Streak */
+.streakWrap {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.streakImg {
+  width: 100%;
+  max-width: 600px;
+  height: auto;
+  display: block;
+  margin-inline: auto;
+  border-radius: 0;
+}
+
+/* Responsive */
+@media (max-width: 900px) {
+  .statCards { grid-template-columns: repeat(2, 1fr); }
+  .statsImages { grid-template-columns: 1fr; }
+}
+
+@media (max-width: 480px) {
+  .statCards { grid-template-columns: repeat(2, 1fr); gap: 0.75rem; }
+  .statValue { font-size: 1.6rem; }
+}

@@ -1,0 +1,120 @@
+/* About.module.css */
+
+/* ── About Block ── */
+.aboutBlock {
+  margin-bottom: 5rem;
+  max-width: 720px;
+}
+
+.prose {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  color: var(--text-secondary);
+  font-size: 1.05rem;
+  line-height: 1.8;
+  margin-bottom: 2rem;
+}
+
+.prose strong {
+  color: var(--text-primary);
+  font-weight: 600;
+}
+
+.toolsLabel {
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  margin-bottom: 0.75rem;
+  font-family: var(--font-mono);
+}
+
+.toolsWrap { margin-top: 1.5rem; }
+
+.tools {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+/* ── Skills Block ── */
+
+.skillGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+  gap: 0.75rem;
+  margin-top: 0.75rem;
+}
+
+.skillGrid > div {
+  height: 100%;
+}
+
+.skillCard {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.4rem 1rem 0.4rem 0.4rem;
+  background: var(--accent-dim);
+  border: 1px solid var(--border-subtle);
+  border-radius: 0;
+  cursor: default;
+  transition: all 0.3s var(--ease);
+  height: 100%;
+  width: 100%;
+}
+
+.skillCard:hover {
+  transform: translateY(-2px);
+  border-color: var(--border-medium);
+  background: var(--accent-glow);
+  box-shadow: var(--shadow-md);
+}
+
+.skillIcon {
+  font-size: 1.1rem;
+  width: 30px;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--accent-dim);
+  border-radius: 0;
+  line-height: 1;
+  transition: background 0.2s var(--ease);
+}
+
+.skillCard:hover .skillIcon {
+  background: var(--accent-glow);
+}
+
+.skillInfo {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.skillName {
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  line-height: 1.1;
+}
+
+.skillCategory {
+  font-size: 0.7rem;
+  color: var(--text-muted);
+  font-family: var(--font-mono);
+  margin-top: 0.15rem;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+/* Responsive */
+@media (max-width: 640px) {
+  .aboutBlock {
+    margin-bottom: 3.5rem;
+  }
+}

@@ -1,0 +1,345 @@
+/* Projects.module.css */
+
+.header {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 1.5rem;
+  margin-bottom: 3rem;
+  flex-wrap: wrap;
+}
+
+.empty {
+  color: var(--text-muted);
+  text-align: center;
+  padding: 3rem;
+}
+
+/* Horizontal Scroll Container */
+.carouselWrap {
+  position: relative;
+}
+
+.grid {
+  display: flex;
+  gap: 1.5rem;
+  overflow-x: auto;
+  overflow-y: hidden;
+  padding-block: 12px 1rem; /* Prevent hover cutoff at the top */
+  margin-top: -12px; /* Offset the padding to stay vertically aligned */
+  scroll-snap-type: x mandatory;
+  scroll-behavior: smooth;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none; /* Firefox */
+}
+
+/* Hide WebKit scrollbar */
+.grid::-webkit-scrollbar {
+  display: none;
+}
+
+/* Pagination */
+.paginationContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+  margin-top: 1.5rem;
+}
+
+.pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+.arrowBtn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 0;
+  border: 1px solid var(--border-medium);
+  background: var(--bg-surface);
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition: all 0.2s var(--ease);
+}
+
+.arrowBtn:hover:not(:disabled) {
+  background: var(--accent-dim);
+  color: var(--accent);
+  border-color: var(--border-strong);
+  transform: scale(1.05);
+}
+
+.arrowBtn:disabled {
+  opacity: 0.3;
+  cursor: not-allowed;
+}
+
+.dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 0;
+  background: rgba(36, 177, 177, 0.2);
+  border: none;
+  cursor: pointer;
+  transition: all 0.3s var(--ease);
+  padding: 0;
+}
+
+.dot:hover {
+  background: var(--accent);
+}
+
+.dotActive {
+  width: 24px;
+  border-radius: 0;
+  background: var(--accent);
+}
+
+/* Card */
+.repoCard {
+  display: flex;
+  flex-direction: column;
+  padding: 0;
+  overflow: hidden;
+  cursor: default;
+  position: relative;
+  transition: all 0.3s var(--ease);
+  flex: 0 0 360px; /* Fixed width for horizontal scrolling */
+  scroll-snap-align: start;
+}
+
+.pinnedCard {
+  border: 1px solid var(--accent);
+  box-shadow: 0 4px 20px rgba(75, 184, 250, 0.12);
+}
+
+.pinnedBadge {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  background: rgba(0, 36, 36, 0.85);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border: 1px solid rgba(36, 177, 177, 0.4);
+  color: #fff;
+  font-size: 0.75rem;
+  font-weight: 600;
+  padding: 0.35rem 0.65rem;
+  border-radius: 0;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  box-shadow: 0 4px 14px rgba(0,0,0,0.4);
+}
+
+.pinnedBadge svg {
+  color: var(--accent);
+}
+
+/* Hover lift is handled by .card base */
+
+/* ── Preview ── */
+.previewLink {
+  display: block;
+  text-decoration: none;
+}
+
+.previewWrap {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  border-radius: 0;
+  overflow: hidden;
+  background: var(--bg-surface);
+}
+
+.previewImg {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.4s var(--ease), filter 0.4s var(--ease);
+  filter: brightness(0.92);
+}
+
+.repoCard:hover .previewImg {
+  transform: scale(1.04);
+  filter: brightness(0.7);
+}
+
+/* Overlay */
+.previewOverlay {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0, 24, 24, 0.45);
+  opacity: 0;
+  transition: opacity 0.3s var(--ease);
+}
+
+.repoCard:hover .previewOverlay {
+  opacity: 1;
+}
+
+.previewViewBtn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.55rem 1.1rem;
+  background: rgba(255, 255, 255, 0.12);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  border-radius: 10px;
+  color: white;
+  font-size: 0.85rem;
+  font-weight: 600;
+  transform: translateY(6px);
+  transition: transform 0.3s var(--ease);
+}
+
+.repoCard:hover .previewViewBtn {
+  transform: translateY(0);
+}
+
+/* ── Body ── */
+.body {
+  display: flex;
+  flex-direction: column;
+  gap: 0.65rem;
+  padding: 1.25rem 1.4rem 1.4rem;
+  flex: 1;
+}
+
+/* Header */
+.repoHeader {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.repoName {
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  text-decoration: none;
+  flex: 1;
+  min-width: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  transition: color 0.2s;
+}
+
+.repoName:hover { color: var(--accent); }
+
+.extLink {
+  color: var(--text-muted);
+  display: flex;
+  align-items: center;
+  transition: color 0.2s;
+  flex-shrink: 0;
+}
+
+.extLink:hover { color: var(--accent); }
+
+/* Description */
+.repoDesc {
+  font-size: 0.875rem;
+  color: var(--text-secondary);
+  line-height: 1.6;
+  flex: 1;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+  overflow: hidden;
+}
+
+/* Topics */
+.topics {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+}
+
+.topic {
+  font-size: 0.7rem;
+  padding: 0.2rem 0.55rem;
+}
+
+/* Footer */
+.repoFooter {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+  margin-top: auto;
+  padding-top: 0.65rem;
+  border-top: 1px solid var(--border-subtle);
+}
+
+.repoStats {
+  display: flex;
+  align-items: center;
+  gap: 0.9rem;
+}
+
+.lang {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  font-size: 0.8rem;
+  color: var(--text-secondary);
+  font-weight: 500;
+}
+
+.langDot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.statItem {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  font-family: var(--font-mono);
+}
+
+.liveLink {
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--accent);
+  text-decoration: none;
+  padding: 0.25rem 0.6rem;
+  border-radius: 6px;
+  background: var(--accent-dim);
+  border: 1px solid var(--border-subtle);
+  transition: all 0.2s;
+  flex-shrink: 0;
+}
+
+.liveLink:hover {
+  background: rgba(75, 184, 250, 0.2);
+  border-color: var(--border-medium);
+}
+
+@media (max-width: 720px) {
+  .header { flex-direction: column; align-items: flex-start; }
+  .repoCard {
+    flex: 0 0 85vw; /* Almost full width on mobile */
+  }
+}
