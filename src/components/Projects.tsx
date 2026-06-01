@@ -13,11 +13,11 @@ interface ProjectsProps {
 
 const OWNER = "Teramoto669";
 
-const PINNED_REPOS = ["Web-Aonime", "anikoto-scrap", "teramoto-web"];
+const PINNED_REPOS = ["Web-Aonime", "anikoto-scrap-api", "teramoto-web"];
 
 const CUSTOM_DESCRIPTIONS: Record<string, string> = {
   "Web-Aonime": "A modern web application for streaming and discovering anime, built with TypeScript.",
-  "anikoto-scrap": "An automated web scraper designed to extract and organize data from anime websites.",
+  "anikoto-scrap-api": "An API for scraping and organizing anime data from various sources.",
   "teramoto-web": "My Own Portfolio, where this website you're currently visiting, built with TypeScript and Next.js.",
 };
 
@@ -57,6 +57,7 @@ function PinIcon() {
 
 export default function Projects({ repos }: ProjectsProps) {
   const [activeIndex, setActiveIndex] = useState(0);
+  const [thumbVersion, setThumbVersion] = useState(0);
   const [pages, setPages] = useState<number[]>([]);
   const scrollRef = useRef<HTMLDivElement>(null);
 
@@ -135,6 +136,16 @@ export default function Projects({ repos }: ProjectsProps) {
     };
   }, [sortedRepos.length]);
 
+  // Auto-refresh thumbnails every 3 hours
+  useEffect(() => {
+    const THREE_HOURS = 24 * 60 * 60 * 1000;
+    const id = setInterval(() => {
+      setThumbVersion((v) => v + 1);
+    }, THREE_HOURS);
+
+    return () => clearInterval(id);
+  }, []);
+
   const handleScroll = () => {
     if (!scrollRef.current || pages.length === 0) return;
     const scrollLeft = scrollRef.current.scrollLeft;
@@ -194,16 +205,28 @@ export default function Projects({ repos }: ProjectsProps) {
           </ScrollReveal>
 
           <ScrollReveal animation="left" delay={100}>
-            <a
-              href={`https://github.com/${OWNER}?tab=repositories`}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="btn btn-ghost"
-              aria-label="View all repositories on GitHub"
-            >
-              All Repos
-              <ExternalIcon />
-            </a>
+            <div style={{ display: "flex", gap: 8, alignItems: "center" }}>
+              <a
+                href={`https://github.com/${OWNER}?tab=repositories`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="btn btn-ghost"
+                aria-label="View all repositories on GitHub"
+              >
+                All Repos
+                <ExternalIcon />
+              </a>
+
+              <button
+                type="button"
+                className="btn btn-ghost"
+                onClick={() => setThumbVersion((v) => v + 1)}
+                aria-label="Refresh project thumbnails"
+                title="Refresh Thumbnails"
+              >
+                Refresh Thumbnails
+              </button>
+            </div>
           </ScrollReveal>
         </div>
 
@@ -243,13 +266,14 @@ export default function Projects({ repos }: ProjectsProps) {
                             )}
                             {/* eslint-disable-next-line @next/next/no-img-element */}
                             <img
-                              src={
-                                repo.homepage
+                              src={(() => {
+                                const base = repo.homepage
                                   ? `https://s0.wordpress.com/mshots/v1/${encodeURIComponent(
                                     repo.homepage.startsWith("http") ? repo.homepage : `https://${repo.homepage}`
                                   )}?w=600&h=300`
-                                  : `https://opengraph.githubassets.com/1/${OWNER}/${repo.name}`
-                              }
+                                  : `https://opengraph.githubassets.com/1/${OWNER}/${repo.name}`;
+                                return base.includes("?") ? `${base}&v=${thumbVersion}` : `${base}?v=${thumbVersion}`;
+                              })()}
                               alt={`Preview of ${repo.name}`}
                               className={styles.previewImg}
                               loading={index < 2 ? "eager" : "lazy"}
