@@ -41,7 +41,7 @@ export default function Hero({ user }: HeroProps) {
               Rezha Shahidzinda
             </h1>
             <p className={styles.tagline}>
-              Informatics Engineering Student
+              Computer Science Student
               <span className={styles.dot}> · </span>
               <span className={styles.modder}>Modder</span>
             </p>
