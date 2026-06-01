@@ -100,7 +100,7 @@ export default function GitHubStats({ user }: GitHubStatsProps) {
               <h3 className={styles.imgTitle}>GitHub Stats</h3>
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
-                src={`https://github-readme-tera.vercel.app/api?username=${USERNAME}&show_icons=true&theme=transparent&title_color=${titleColor}&text_color=${textColor}&icon_color=${iconColor}&hide_border=true&border_radius=0`}
+                src={`https://github-readme-tera.vercel.app/api?username=${USERNAME}&show_icons=true&theme=transparent&title_color=${titleColor}&text_color=${textColor}&icon_color=${iconColor}&hide_border=true&border_radius=0&v=1`}
                 alt={`${user.name ?? USERNAME} GitHub stats`}
                 className={styles.statsImg}
                 loading="lazy"
@@ -113,7 +113,7 @@ export default function GitHubStats({ user }: GitHubStatsProps) {
               <h3 className={styles.imgTitle}>Most Used Languages</h3>
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
-                src={`https://github-readme-tera.vercel.app/api/top-langs/?username=${USERNAME}&layout=compact&theme=transparent&title_color=${titleColor}&text_color=${textColor}&icon_color=${iconColor}&langs_count=8&hide_border=true&border_radius=0`}
+                src={`https://github-readme-tera.vercel.app/api/top-langs/?username=${USERNAME}&layout=compact&theme=transparent&title_color=${titleColor}&text_color=${textColor}&icon_color=${iconColor}&langs_count=8&hide_border=true&border_radius=0&v=1`}
                 alt={`${user.name ?? USERNAME} most used languages`}
                 className={styles.statsImg}
                 loading="lazy"
@@ -129,7 +129,7 @@ export default function GitHubStats({ user }: GitHubStatsProps) {
             <div className={styles.contribCard}>
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
-                src={`https://ghchart.rshah.org/${titleColor}/${USERNAME}`}
+                src={`https://ghchart.rshah.org/${titleColor}/${USERNAME}?v=1`}
                 alt={`${user.name ?? USERNAME} GitHub contribution chart`}
                 className={`${styles.contribImg} ${!isLight ? styles.contribImgDark : ""}`}
                 loading="lazy"
@@ -144,7 +144,7 @@ export default function GitHubStats({ user }: GitHubStatsProps) {
             <h3 className={styles.imgTitle}>Streak Stats</h3>
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
-              src={`https://streak-stats.demolab.com?user=${USERNAME}&theme=transparent&background=060d1a00&ring=${titleColor}&fire=${titleColor}&currStreakLabel=${titleColor}&sideNums=${sideNumsColor}&currStreakNum=${sideNumsColor}&sideLabels=${textColor}&dates=${datesColor}&border=${borderColor}&border_radius=0`}
+              src={`https://streak-stats.demolab.com?user=${USERNAME}&theme=transparent&background=060d1a00&ring=${titleColor}&fire=${titleColor}&currStreakLabel=${titleColor}&sideNums=${sideNumsColor}&currStreakNum=${sideNumsColor}&sideLabels=${textColor}&dates=${datesColor}&border=${borderColor}&border_radius=0&v=1`}
               alt={`${user.name ?? USERNAME} GitHub streak stats`}
               className={styles.streakImg}
               loading="lazy"
