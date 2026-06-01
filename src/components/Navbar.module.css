@@ -314,11 +314,12 @@
 @media (max-width: 768px) {
   .header {
     top: 1rem;
-    left: auto;
+    left: unset;
     right: 1rem;
     transform: none;
     width: fit-content;
     border-radius: 0;
+    animation: slideDownNavMobile 0.8s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
   }
 
   .nav {
@@ -341,5 +342,17 @@
 
   .themeToggle {
     padding: 0.4rem;
+  }
+}
+
+@keyframes slideDownNavMobile {
+  from {
+    transform: translateY(-150%);
+    opacity: 0;
+  }
+
+  to {
+    transform: translateY(0);
+    opacity: 1;
   }
 }
