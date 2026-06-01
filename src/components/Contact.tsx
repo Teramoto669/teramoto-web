@@ -19,7 +19,7 @@ const CONTACT_LINKS = [
     id: "email-link",
     label: "Email",
     handle: "Send me a message",
-    href: "mailto:rezha@example.com",
+    href: "mailto:rezhashahidzindarb@gmail.com",
     description: "Got a project in mind? Let's talk",
     icon: (
       <svg width="26" height="26" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
