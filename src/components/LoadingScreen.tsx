@@ -148,7 +148,7 @@ export default function LoadingScreen() {
     if (!audioRef.current) {
       const audio = new Audio("/bgm.mp3");
       audio.loop = true;
-      audio.volume = 0.75;
+      audio.volume = 0.9;
       audioRef.current = audio;
     }
     audioRef.current.play().catch(() => { });
