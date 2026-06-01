@@ -115,6 +115,28 @@
   background: var(--bg-glass);
 }
 
+/* ── BGM button + visualizer ─────────────────────────────── */
+.bgmBtn {
+  color: var(--text-secondary);
+  gap: 0;
+}
+
+.bgmBtn:hover {
+  color: var(--text-primary);
+  background: var(--bg-glass);
+}
+
+/* Canvas visualizer — drawn by Web Audio API RAF loop */
+.vizCanvas {
+  display: block;
+  /* Slight opacity drop on hover to hint interactivity */
+  transition: opacity 0.2s ease;
+}
+
+.bgmBtn:hover .vizCanvas {
+  opacity: 0.45;
+}
+
 /* CTA button */
 .cta {
   display: inline-flex;

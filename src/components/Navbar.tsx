@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import styles from "./Navbar.module.css";
 import { useTheme } from "./ThemeProvider";
 
@@ -16,7 +16,113 @@ export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [activeSection, setActiveSection] = useState("");
   const [menuOpen, setMenuOpen] = useState(false);
+  const [bgmPlaying, setBgmPlaying] = useState(false);
+  const [bgmMuted, setBgmMuted] = useState(false);
+  const bgmRef = useRef<HTMLAudioElement | null>(null);
+  const canvasRef = useRef<HTMLCanvasElement | null>(null);
+  const analyserRef = useRef<AnalyserNode | null>(null);
+  const animFrameRef = useRef<number>(0);
   const { theme, toggleTheme } = useTheme();
+
+  // ── Real audio visualizer setup ───────────────────────────
+  useEffect(() => {
+    const handleBgmStart = () => {
+      const audio = (window as unknown as Record<string, unknown>).__bgmAudio as HTMLAudioElement | undefined;
+      if (!audio) return;
+      bgmRef.current = audio;
+      setBgmPlaying(true);
+
+      // Build Web Audio graph (only once)
+      if (analyserRef.current) return;
+      try {
+        const AudioCtx = window.AudioContext ||
+          (window as unknown as Record<string, typeof AudioContext>).webkitAudioContext;
+        const ctx = new AudioCtx();
+        const analyser = ctx.createAnalyser();
+        analyser.fftSize = 64;          // 32 frequency bins — plenty for 4 bands
+        analyser.smoothingTimeConstant = 0.75;
+        analyserRef.current = analyser;
+
+        const source = ctx.createMediaElementSource(audio);
+        source.connect(analyser);
+        analyser.connect(ctx.destination);
+
+        // RAF draw loop
+        const dataArray = new Uint8Array(analyser.frequencyBinCount);
+        const BANDS = [
+          [0,  2],   // sub-bass
+          [2,  5],   // bass
+          [5,  9],   // low-mid
+          [9,  14],  // mid
+          [14, 20],  // upper-mid
+          [20, 32],  // high
+        ] as const;
+
+        const draw = () => {
+          animFrameRef.current = requestAnimationFrame(draw);
+          const canvas = canvasRef.current;
+          if (!canvas) return;
+          const canvasCtx = canvas.getContext("2d");
+          if (!canvasCtx) return;
+
+          analyser.getByteFrequencyData(dataArray);
+
+          const W = canvas.width;
+          const H = canvas.height;
+          canvasCtx.clearRect(0, 0, W, H);
+
+          const BAR_W = 2;
+          const GAP = 1;
+          const totalW = BAR_W * 6 + GAP * 5;
+          const startX = (W - totalW) / 2;
+
+          BANDS.forEach(([lo, hi], i) => {
+            // Average of the band's bins
+            let sum = 0;
+            for (let b = lo; b < hi; b++) sum += dataArray[b];
+            const avg = sum / (hi - lo);
+            const barH = Math.max(2, (avg / 255) * H);
+
+            const x = startX + i * (BAR_W + GAP);
+            const y = H - barH;
+
+            // Read bar color from CSS variable so it follows the current theme
+            const barColor = getComputedStyle(document.documentElement)
+              .getPropertyValue("--text-secondary").trim() || "#24b1b1";
+
+            canvasCtx.fillStyle = barColor;
+            canvasCtx.beginPath();
+            if (canvasCtx.roundRect) {
+              canvasCtx.roundRect(x, y, BAR_W, barH, 1);
+            } else {
+              canvasCtx.rect(x, y, BAR_W, barH);
+            }
+            canvasCtx.fill();
+          });
+        };
+        draw();
+      } catch {
+        // Web Audio not available — fallback to CSS animation (keep vizBars)
+      }
+    };
+
+    window.addEventListener("bgm:start", handleBgmStart);
+    return () => {
+      window.removeEventListener("bgm:start", handleBgmStart);
+      cancelAnimationFrame(animFrameRef.current);
+    };
+  }, []);
+
+  const toggleBgm = () => {
+    if (!bgmRef.current) return;
+    if (bgmMuted) {
+      bgmRef.current.muted = false;
+      setBgmMuted(false);
+    } else {
+      bgmRef.current.muted = true;
+      setBgmMuted(true);
+    }
+  };
 
   useEffect(() => {
     const handleScroll = () => {
@@ -76,6 +182,32 @@ export default function Navbar() {
         </ul>
 
         <div className={styles.navActions}>
+          {bgmPlaying && (
+            <button
+              onClick={toggleBgm}
+              className={`${styles.themeToggle} ${styles.bgmBtn}`}
+              aria-label={bgmMuted ? "Unmute music" : "Mute music"}
+              title={bgmMuted ? "Unmute music" : "Mute music"}
+            >
+              {bgmMuted ? (
+                /* muted — static speaker-off icon */
+                <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/>
+                  <line x1="23" y1="9" x2="17" y2="15"/>
+                  <line x1="17" y1="9" x2="23" y2="15"/>
+                </svg>
+              ) : (
+                /* playing — real-time canvas visualizer */
+                <canvas
+                  ref={canvasRef}
+                  width={17}
+                  height={14}
+                  className={styles.vizCanvas}
+                  aria-hidden="true"
+                />
+              )}
+            </button>
+          )}
           <button 
             onClick={toggleTheme} 
             className={styles.themeToggle} 

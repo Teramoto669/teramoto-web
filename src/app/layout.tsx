@@ -37,6 +37,7 @@ import CustomCursor from "@/components/CustomCursor";
 import Particles from "@/components/Particles";
 import SpotlightEffect from "@/components/SpotlightEffect";
 import { ThemeProvider } from "@/components/ThemeProvider";
+import LoadingScreen from "@/components/LoadingScreen";
 
 export default function RootLayout({
   children,
@@ -60,6 +61,7 @@ export default function RootLayout({
       </head>
       <body>
         <ThemeProvider>
+          <LoadingScreen />
           <Particles />
           <CustomCursor />
           <SpotlightEffect />
