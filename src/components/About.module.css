@@ -84,6 +84,7 @@
   border-radius: 0;
   line-height: 1;
   transition: background 0.2s var(--ease);
+  color: var(--accent);
 }
 
 .skillCard:hover .skillIcon {
@@ -99,7 +100,8 @@
 .skillName {
   font-size: 0.95rem;
   font-weight: 600;
-  color: var(--text-primary);
+  color: var(--accent);
+  font-family: var(--font-mono);
   line-height: 1.1;
 }
 
