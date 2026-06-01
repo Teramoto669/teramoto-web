@@ -126,8 +126,8 @@
 
 /* Dark mode: invert white empty cells to dark, keep teal accent hues intact */
 .contribImgDark {
-  filter: invert(1) hue-rotate(155deg) brightness(0.85) saturate(1.4);
-  mix-blend-mode: normal;
+  filter: invert(1) hue-rotate(180deg) brightness(1.6) saturate(2) contrast(1.2);
+  mix-blend-mode: screen;
 }
 
 /* Streak */
