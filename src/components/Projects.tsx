@@ -259,7 +259,7 @@ export default function Projects({ repos }: ProjectsProps) {
                                   ? `https://s0.wordpress.com/mshots/v1/${encodeURIComponent(
                                     repo.homepage.startsWith("http") ? repo.homepage : `https://${repo.homepage}`
                                   )}?w=600&h=300`
-                                  : `https://opengraph.githubassets.com/1/${OWNER}/${repo.name}`;
+                                  : `https://opengraph.githubassets.com/1/${repo.full_name}`;
                                 return base.includes("?") ? `${base}&v=${thumbVersion}` : `${base}?v=${thumbVersion}`;
                               })()}
                               alt={`Preview of ${repo.name}`}

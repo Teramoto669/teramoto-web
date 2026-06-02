@@ -38,6 +38,11 @@ const headers = {
   "X-GitHub-Api-Version": "2022-11-28",
 };
 
+// Tambahkan repo tempat Anda berkontribusi di sini dengan format "owner/repo"
+const CONTRIBUTED_REPOS: string[] = [
+  // contoh: "facebook/react"
+];
+
 export async function getGitHubUser(): Promise<GitHubUser> {
   const res = await fetch(`${BASE_URL}/users/${GITHUB_USERNAME}`, {
     headers,
@@ -56,7 +61,37 @@ export async function getGitHubRepos(): Promise<GitHubRepo[]> {
     }
   );
   if (!res.ok) throw new Error("Failed to fetch GitHub repos");
-  const repos: GitHubRepo[] = await res.json();
+  
+  let repos: GitHubRepo[] = await res.json();
+
+  // Fetch contributed repos
+  if (CONTRIBUTED_REPOS.length > 0) {
+    const contributedPromises = CONTRIBUTED_REPOS.map(async (repoName) => {
+      try {
+        const repoRes = await fetch(`${BASE_URL}/repos/${repoName}`, {
+          headers,
+          next: { revalidate: 3600 },
+        });
+        if (repoRes.ok) {
+          return await repoRes.json();
+        }
+      } catch (e) {
+        console.error(`Failed to fetch contributed repo: ${repoName}`);
+      }
+      return null;
+    });
+    
+    const contributedRepos = (await Promise.all(contributedPromises)).filter(Boolean) as GitHubRepo[];
+    
+    // Filter duplicates by id just in case
+    const existingIds = new Set(repos.map(r => r.id));
+    for (const cr of contributedRepos) {
+      if (!existingIds.has(cr.id)) {
+        repos.push(cr);
+      }
+    }
+  }
+
   return repos
     .filter((r) => !r.fork && !r.archived)
     .sort((a, b) => b.stargazers_count - a.stargazers_count)
