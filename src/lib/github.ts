@@ -14,7 +14,7 @@ export interface GitHubUser {
 }
 
 export interface GitHubRepo {
-  id: number;
+  id: number | string;
   name: string;
   full_name: string;
   description: string | null;
@@ -38,10 +38,79 @@ const headers = {
   "X-GitHub-Api-Version": "2022-11-28",
 };
 
-// Tambahkan repo tempat Anda berkontribusi di sini dengan format "owner/repo"
-const CONTRIBUTED_REPOS: string[] = [
-  // contoh: "facebook/react"
-];
+async function getContributedRepos(): Promise<GitHubRepo[]> {
+  const token = process.env.GITHUB_TOKEN;
+  if (!token) return [];
+
+  const query = `
+    query {
+      user(login: "${GITHUB_USERNAME}") {
+        repositoriesContributedTo(first: 20, contributionTypes: [COMMIT, PULL_REQUEST, REPOSITORY], includeUserRepositories: false, orderBy: {field: STARGAZERS, direction: DESC}) {
+          nodes {
+            id
+            name
+            nameWithOwner
+            description
+            url
+            stargazerCount
+            forkCount
+            primaryLanguage {
+              name
+            }
+            repositoryTopics(first: 5) {
+              nodes {
+                topic {
+                  name
+                }
+              }
+            }
+            updatedAt
+            homepageUrl
+            isFork
+            isArchived
+          }
+        }
+      }
+    }
+  `;
+
+  try {
+    const res = await fetch('https://api.github.com/graphql', {
+      method: 'POST',
+      headers: {
+        'Authorization': `Bearer ${token}`,
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ query }),
+      next: { revalidate: 3600 }
+    });
+
+    if (!res.ok) return [];
+
+    const json = await res.json();
+    const nodes = json.data?.user?.repositoriesContributedTo?.nodes || [];
+
+    return nodes.map((node: any) => ({
+      id: node.id,
+      name: node.name,
+      full_name: node.nameWithOwner,
+      description: node.description,
+      html_url: node.url,
+      stargazers_count: node.stargazerCount,
+      forks_count: node.forkCount,
+      language: node.primaryLanguage?.name || null,
+      topics: node.repositoryTopics?.nodes?.map((n: any) => n.topic.name) || [],
+      updated_at: node.updatedAt,
+      homepage: node.homepageUrl,
+      fork: node.isFork,
+      archived: node.isArchived,
+      watchers_count: 0
+    }));
+  } catch (e) {
+    console.error("Failed to fetch contributed repos via GraphQL:", e);
+    return [];
+  }
+}
 
 export async function getGitHubUser(): Promise<GitHubUser> {
   const res = await fetch(`${BASE_URL}/users/${GITHUB_USERNAME}`, {
@@ -64,31 +133,14 @@ export async function getGitHubRepos(): Promise<GitHubRepo[]> {
   
   let repos: GitHubRepo[] = await res.json();
 
-  // Fetch contributed repos
-  if (CONTRIBUTED_REPOS.length > 0) {
-    const contributedPromises = CONTRIBUTED_REPOS.map(async (repoName) => {
-      try {
-        const repoRes = await fetch(`${BASE_URL}/repos/${repoName}`, {
-          headers,
-          next: { revalidate: 3600 },
-        });
-        if (repoRes.ok) {
-          return await repoRes.json();
-        }
-      } catch (e) {
-        console.error(`Failed to fetch contributed repo: ${repoName}`);
-      }
-      return null;
-    });
-    
-    const contributedRepos = (await Promise.all(contributedPromises)).filter(Boolean) as GitHubRepo[];
-    
-    // Filter duplicates by id just in case
-    const existingIds = new Set(repos.map(r => r.id));
-    for (const cr of contributedRepos) {
-      if (!existingIds.has(cr.id)) {
-        repos.push(cr);
-      }
+  // Fetch contributed repos automatically via GraphQL
+  const contributedRepos = await getContributedRepos();
+  
+  // Filter duplicates by id just in case
+  const existingIds = new Set(repos.map(r => r.id));
+  for (const cr of contributedRepos) {
+    if (!existingIds.has(cr.id)) {
+      repos.push(cr);
     }
   }
 
