@@ -39,17 +39,49 @@
   gap: 0.5rem;
 }
 
-/* ── Skills Block ── */
+/* ── Marquee & Skills Block ── */
 
-.skillGrid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+.marqueeContainer {
+  display: flex;
+  flex-direction: column;
   gap: 0.75rem;
   margin-top: 0.75rem;
+  overflow: hidden;
+  position: relative;
+  width: 100%;
+  -webkit-mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
+  mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
 }
 
-.skillGrid > div {
-  height: 100%;
+.marqueeRow {
+  display: flex;
+  width: 100%;
+}
+
+.marqueeTrack {
+  display: flex;
+  width: max-content;
+  animation: scrollLeft 25s linear infinite;
+}
+
+.marqueeTrackSlow {
+  animation-duration: 32s;
+  animation-direction: reverse;
+}
+
+.marqueeTrack:hover {
+  animation-play-state: paused;
+}
+
+.marqueeGroup {
+  display: flex;
+  gap: 0.75rem;
+  padding-right: 0.75rem;
+}
+
+@keyframes scrollLeft {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
 }
 
 .skillCard {
@@ -63,7 +95,8 @@
   cursor: default;
   transition: all 0.3s var(--ease);
   height: 100%;
-  width: 100%;
+  width: 160px;
+  flex-shrink: 0;
 }
 
 .skillCard:hover {

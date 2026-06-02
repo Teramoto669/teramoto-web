@@ -9,18 +9,43 @@ import {
   SiNextdotjs,
   SiVite,
   SiFlutter,
+  SiJavascript,
+  SiLaravel,
+  SiPhp,
+  SiCplusplus,
 } from "react-icons/si";
+import { FaJava } from "react-icons/fa";
 
 const SKILLS = [
-  { name: "Python", icon: <SiPython size={20} aria-hidden="true" />, category: "Language" },
+  { name: "JavaScript", icon: <SiJavascript size={20} aria-hidden="true" />, category: "Language" },
   { name: "TypeScript", icon: <SiTypescript size={20} aria-hidden="true" />, category: "Language" },
+  { name: "Python", icon: <SiPython size={20} aria-hidden="true" />, category: "Language" },
+  { name: "C++", icon: <SiCplusplus size={20} aria-hidden="true" />, category: "Language" },
   { name: "C#", icon: <SiSharp size={20} aria-hidden="true" />, category: "Language" },
+  { name: "Java", icon: <FaJava size={20} aria-hidden="true" />, category: "Language" },
   { name: "Kotlin", icon: <SiKotlin size={20} aria-hidden="true" />, category: "Language" },
+  { name: "PHP", icon: <SiPhp size={20} aria-hidden="true" />, category: "Language" },
   { name: "Dart", icon: <SiDart size={20} aria-hidden="true" />, category: "Language" },
+  { name: "Laravel", icon: <SiLaravel size={20} aria-hidden="true" />, category: "Framework" },
   { name: "Next.js", icon: <SiNextdotjs size={20} aria-hidden="true" />, category: "Framework" },
   { name: "Vite", icon: <SiVite size={20} aria-hidden="true" />, category: "Framework" },
   { name: "Flutter", icon: <SiFlutter size={20} aria-hidden="true" />, category: "Framework" },
 ];
+
+const ROW1 = SKILLS.slice(0, 7);
+const ROW2 = SKILLS.slice(7);
+
+const renderSkill = (skill: typeof SKILLS[0], index: number) => (
+  <div key={`${skill.name}-${index}`} className={styles.skillCard} title={`${skill.name} - ${skill.category}`}>
+    <div className={styles.skillIcon} aria-hidden="true">
+      {skill.icon}
+    </div>
+    <div className={styles.skillInfo}>
+      <span className={styles.skillName}>{skill.name}</span>
+      <span className={styles.skillCategory}>{skill.category}</span>
+    </div>
+  </div>
+);
 
 const TOOLS = [
   "Git", "VS Code", "Figma", "Docker", "Linux", "Postman", "Firebase", "Vercel",
@@ -69,21 +94,22 @@ export default function About() {
             <ScrollReveal animation="up" delay={400}>
               <p className={styles.toolsLabel}>Core Toolkit</p>
             </ScrollReveal>
-            <div className={styles.skillGrid}>
-              {SKILLS.map((skill, index) => (
-                <ScrollReveal key={skill.name} animation="scale" delay={500 + index * 50}>
-                  <div className={styles.skillCard} title={`${skill.name} - ${skill.category}`}>
-                    <div className={styles.skillIcon} aria-hidden="true">
-                      {skill.icon}
-                    </div>
-                    <div className={styles.skillInfo}>
-                      <span className={styles.skillName}>{skill.name}</span>
-                      <span className={styles.skillCategory}>{skill.category}</span>
-                    </div>
+            <ScrollReveal animation="up" delay={500}>
+              <div className={styles.marqueeContainer}>
+                <div className={styles.marqueeRow}>
+                  <div className={styles.marqueeTrack}>
+                    <div className={styles.marqueeGroup}>{ROW1.map(renderSkill)}</div>
+                    <div className={styles.marqueeGroup}>{ROW1.map(renderSkill)}</div>
                   </div>
-                </ScrollReveal>
-              ))}
-            </div>
+                </div>
+                <div className={styles.marqueeRow}>
+                  <div className={`${styles.marqueeTrack} ${styles.marqueeTrackSlow}`}>
+                    <div className={styles.marqueeGroup}>{ROW2.map(renderSkill)}</div>
+                    <div className={styles.marqueeGroup}>{ROW2.map(renderSkill)}</div>
+                  </div>
+                </div>
+              </div>
+            </ScrollReveal>
           </div>
 
           <div className={styles.toolsWrap}>
