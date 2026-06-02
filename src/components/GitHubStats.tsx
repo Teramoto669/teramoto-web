@@ -26,9 +26,9 @@ export default function GitHubStats({ user }: GitHubStatsProps) {
   const sideNumsColor = isLight ? "1a2e30" : "FFF0E4";
   const borderColor = isLight ? "35858E4D" : "004d4d";
 
-  // Cache buster dinamis: menggunakan tanggal hari ini (YYYY-MM-DD)
-  // Agar browser mengambil gambar terbaru setiap harinya dan tidak terjebak cache lama
-  const cacheBuster = new Date().toISOString().split("T")[0];
+  // Cache buster dinamis: menggunakan tanggal dan blok 4-jam
+  // Agar browser mengambil gambar terbaru lebih sering (mencegah out-of-sync antar tema)
+  const cacheBuster = `${new Date().toISOString().split("T")[0]}-${Math.floor(new Date().getHours() / 4)}`;
 
   const statCards = [
     {
