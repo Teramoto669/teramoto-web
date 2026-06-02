@@ -8,11 +8,12 @@ import ScrollReveal from "./ScrollReveal";
 
 interface GitHubStatsProps {
   user: GitHubUser;
+  cacheBuster?: string;
 }
 
 const USERNAME = "Teramoto669";
 
-export default function GitHubStats({ user }: GitHubStatsProps) {
+export default function GitHubStats({ user, cacheBuster = "" }: GitHubStatsProps) {
   const { theme } = useTheme();
   const joinYear = new Date(user.created_at).getFullYear();
   const yearsOnGitHub = new Date().getFullYear() - joinYear;
@@ -27,13 +28,7 @@ export default function GitHubStats({ user }: GitHubStatsProps) {
   const sideNumsColor = isLight ? "1a2e30" : "FFF0E4";
   const borderColor = isLight ? "35858E4D" : "004d4d";
 
-  // Cache buster dinamis: per 5 menit
-  // Di-set di useEffect untuk menghindari hydration mismatch
-  const [cacheBuster, setCacheBuster] = useState("");
-  
-  useEffect(() => {
-    setCacheBuster(Math.floor(Date.now() / (5 * 60 * 1000)).toString());
-  }, []);
+
 
   const statCards = [
     {

@@ -14,6 +14,7 @@ export default async function Home() {
     getGitHubUser(),
     getGitHubRepos(),
   ]);
+  const cacheBuster = Math.floor(Date.now() / (5 * 60 * 1000)).toString();
 
   return (
     <>
@@ -30,7 +31,7 @@ export default async function Home() {
         </Suspense>
 
         <Suspense fallback={<div style={{ height: "40rem" }} />}>
-          <GitHubStats user={user} />
+          <GitHubStats user={user} cacheBuster={cacheBuster} />
         </Suspense>
       </main>
 
