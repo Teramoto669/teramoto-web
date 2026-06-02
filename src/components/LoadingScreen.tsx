@@ -192,9 +192,9 @@ export default function LoadingScreen() {
             style={{ background: `linear-gradient(90deg, transparent, ${p.accent})` }}
           />
           <h1 className={styles.name}>
-            {"Rezha".split("").map((c, i) => (
+            {(phase === "loading" ? "Loading" : "Complete").split("").map((c, i) => (
               <span
-                key={i}
+                key={phase === "loading" ? `load-${i}` : `done-${i}`}
                 style={{
                   animationDelay: `${i * 0.07}s`,
                   backgroundImage: `linear-gradient(135deg, ${p.text} 0%, ${p.accent} 100%)`,

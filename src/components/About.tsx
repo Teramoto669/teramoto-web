@@ -43,7 +43,7 @@ export default function About() {
           <div className={styles.prose}>
             <ScrollReveal animation="up" delay={100}>
               <p>
-                Hello! I am <strong>Rezha</strong>, an informatics engineering student 
+                Hello! I am <strong>Rezha</strong>, a Computer Science student 
                 with an insatiable curiosity for how things work under the hood. My coding journey 
                 began with tweaking games and building small automation scripts, which eventually 
                 blossomed into a deep passion for full-stack software development.
