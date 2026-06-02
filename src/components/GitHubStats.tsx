@@ -1,5 +1,6 @@
 "use client";
 
+import { useState, useEffect } from "react";
 import type { GitHubUser } from "@/lib/github";
 import { useTheme } from "./ThemeProvider";
 import styles from "./GitHubStats.module.css";
@@ -26,9 +27,13 @@ export default function GitHubStats({ user }: GitHubStatsProps) {
   const sideNumsColor = isLight ? "1a2e30" : "FFF0E4";
   const borderColor = isLight ? "35858E4D" : "004d4d";
 
-  // Cache buster dinamis: menggunakan tanggal dan blok 4-jam
-  // Agar browser mengambil gambar terbaru lebih sering (mencegah out-of-sync antar tema)
-  const cacheBuster = `${new Date().toISOString().split("T")[0]}-${Math.floor(new Date().getHours() / 4)}`;
+  // Cache buster dinamis: per 5 menit
+  // Di-set di useEffect untuk menghindari hydration mismatch
+  const [cacheBuster, setCacheBuster] = useState("");
+  
+  useEffect(() => {
+    setCacheBuster(Math.floor(Date.now() / (5 * 60 * 1000)).toString());
+  }, []);
 
   const statCards = [
     {

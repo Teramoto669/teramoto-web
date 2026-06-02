@@ -7,6 +7,8 @@ import Projects from "@/components/Projects";
 import GitHubStats from "@/components/GitHubStats";
 import Contact from "@/components/Contact";
 
+export const revalidate = 60; // Revalidate every 60 seconds
+
 export default async function Home() {
   const [user, repos] = await Promise.all([
     getGitHubUser(),

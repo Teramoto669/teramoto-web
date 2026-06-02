@@ -57,7 +57,6 @@ function PinIcon() {
 
 export default function Projects({ repos }: ProjectsProps) {
   const [activeIndex, setActiveIndex] = useState(0);
-  const [thumbVersion, setThumbVersion] = useState(0);
   const [pages, setPages] = useState<number[]>([]);
   const scrollRef = useRef<HTMLDivElement>(null);
 
@@ -136,15 +135,7 @@ export default function Projects({ repos }: ProjectsProps) {
     };
   }, [sortedRepos.length]);
 
-  // Auto-refresh thumbnails every 1 hour
-  useEffect(() => {
-    const ONE_HOUR = 60 * 60 * 1000;
-    const id = setInterval(() => {
-      setThumbVersion((v) => v + 1);
-    }, ONE_HOUR);
-
-    return () => clearInterval(id);
-  }, []);
+  // Thumbnail refresh logic removed because Next.js revalidation and CDN caching handle this better without breaking mshots.
 
   const handleScroll = () => {
     if (!scrollRef.current || pages.length === 0) return;
@@ -255,12 +246,11 @@ export default function Projects({ repos }: ProjectsProps) {
                             {/* eslint-disable-next-line @next/next/no-img-element */}
                             <img
                               src={(() => {
-                                const base = repo.homepage
-                                  ? `https://s0.wordpress.com/mshots/v1/${encodeURIComponent(
-                                    repo.homepage.startsWith("http") ? repo.homepage : `https://${repo.homepage}`
-                                  )}?w=600&h=300`
-                                  : `https://opengraph.githubassets.com/1/${repo.full_name}`;
-                                return base.includes("?") ? `${base}&v=${thumbVersion}` : `${base}?v=${thumbVersion}`;
+                                if (repo.homepage) {
+                                  const url = repo.homepage.startsWith("http") ? repo.homepage : `https://${repo.homepage}`;
+                                  return `https://s0.wordpress.com/mshots/v1/${encodeURIComponent(url)}?w=600&h=300`;
+                                }
+                                return `https://opengraph.githubassets.com/1/${repo.full_name}`;
                               })()}
                               alt={`Preview of ${repo.name}`}
                               className={styles.previewImg}
