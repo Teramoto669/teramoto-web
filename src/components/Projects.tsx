@@ -136,12 +136,12 @@ export default function Projects({ repos }: ProjectsProps) {
     };
   }, [sortedRepos.length]);
 
-  // Auto-refresh thumbnails every 3 hours
+  // Auto-refresh thumbnails every 1 hour
   useEffect(() => {
-    const THREE_HOURS = 24 * 60 * 60 * 1000;
+    const ONE_HOUR = 60 * 60 * 1000;
     const id = setInterval(() => {
       setThumbVersion((v) => v + 1);
-    }, THREE_HOURS);
+    }, ONE_HOUR);
 
     return () => clearInterval(id);
   }, []);
