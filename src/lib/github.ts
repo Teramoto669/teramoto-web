@@ -33,10 +33,14 @@ export interface GitHubRepo {
 const GITHUB_USERNAME = "Teramoto669";
 const BASE_URL = "https://api.github.com";
 
-const headers = {
-  Accept: "application/vnd.github+json",
-  "X-GitHub-Api-Version": "2022-11-28",
-};
+function getHeaders() {
+  const token = process.env.GITHUB_TOKEN;
+  return {
+    Accept: "application/vnd.github+json",
+    "X-GitHub-Api-Version": "2022-11-28",
+    ...(token && { Authorization: `Bearer ${token}` }),
+  };
+}
 
 async function getContributedRepos(): Promise<GitHubRepo[]> {
   const token = process.env.GITHUB_TOKEN;
@@ -82,7 +86,7 @@ async function getContributedRepos(): Promise<GitHubRepo[]> {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({ query }),
-      next: { revalidate: 3600 }
+      next: { revalidate: 60 }
     });
 
     if (!res.ok) return [];
@@ -114,8 +118,8 @@ async function getContributedRepos(): Promise<GitHubRepo[]> {
 
 export async function getGitHubUser(): Promise<GitHubUser> {
   const res = await fetch(`${BASE_URL}/users/${GITHUB_USERNAME}`, {
-    headers,
-    next: { revalidate: 3600 },
+    headers: getHeaders(),
+    next: { revalidate: 60 },
   });
   if (!res.ok) throw new Error("Failed to fetch GitHub user");
   return res.json();
@@ -125,8 +129,8 @@ export async function getGitHubRepos(): Promise<GitHubRepo[]> {
   const res = await fetch(
     `${BASE_URL}/users/${GITHUB_USERNAME}/repos?sort=updated&per_page=50`,
     {
-      headers,
-      next: { revalidate: 3600 },
+      headers: getHeaders(),
+      next: { revalidate: 60 },
     }
   );
   if (!res.ok) throw new Error("Failed to fetch GitHub repos");
