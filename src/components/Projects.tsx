@@ -17,7 +17,7 @@ const PINNED_REPOS = ["Web-Aonime", "anikoto-scrap-api", "teramoto-web"];
 
 const CUSTOM_DESCRIPTIONS: Record<string, string> = {
   "Web-Aonime": "A modern web application for streaming and discovering anime, built with TypeScript.",
-  "anikoto-scrap-api": "An API for scraping and organizing anime data from various sources.",
+  "anikoto-scrap-api": "An API for scraping and organizing anime data from anikoto.",
   "teramoto-web": "My Own Portfolio, where this website you're currently visiting, built with TypeScript and Next.js.",
 };
 
