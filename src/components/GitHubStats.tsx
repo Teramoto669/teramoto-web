@@ -8,12 +8,11 @@ import ScrollReveal from "./ScrollReveal";
 
 interface GitHubStatsProps {
   user: GitHubUser;
-  cacheBuster?: string;
 }
 
 const USERNAME = "Teramoto669";
 
-export default function GitHubStats({ user, cacheBuster = "" }: GitHubStatsProps) {
+export default function GitHubStats({ user }: GitHubStatsProps) {
   const { theme } = useTheme();
   const joinYear = new Date(user.created_at).getFullYear();
   const yearsOnGitHub = new Date().getFullYear() - joinYear;
@@ -104,7 +103,7 @@ export default function GitHubStats({ user, cacheBuster = "" }: GitHubStatsProps
               <h3 className={styles.imgTitle}>GitHub Stats</h3>
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
-                src={`https://github-readme-tera.vercel.app/api?username=${USERNAME}&show_icons=true&theme=transparent&title_color=${titleColor}&text_color=${textColor}&icon_color=${iconColor}&hide_border=true&border_radius=0&v=${cacheBuster}`}
+                src={`https://github-readme-tera.vercel.app/api?username=${USERNAME}&show_icons=true&theme=transparent&title_color=${titleColor}&text_color=${textColor}&icon_color=${iconColor}&hide_border=true&border_radius=0`}
                 alt={`${user.name ?? USERNAME} GitHub stats`}
                 className={styles.statsImg}
                 loading="lazy"
@@ -119,7 +118,7 @@ export default function GitHubStats({ user, cacheBuster = "" }: GitHubStatsProps
               <h3 className={styles.imgTitle}>Most Used Languages</h3>
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
-                src={`https://github-readme-tera.vercel.app/api/top-langs/?username=${USERNAME}&layout=compact&theme=transparent&title_color=${titleColor}&text_color=${textColor}&icon_color=${iconColor}&langs_count=8&hide_border=true&border_radius=0&v=${cacheBuster}`}
+                src={`https://github-readme-tera.vercel.app/api/top-langs/?username=${USERNAME}&layout=compact&theme=transparent&title_color=${titleColor}&text_color=${textColor}&icon_color=${iconColor}&langs_count=8&hide_border=true&border_radius=0`}
                 alt={`${user.name ?? USERNAME} most used languages`}
                 className={styles.statsImg}
                 loading="lazy"
@@ -137,7 +136,7 @@ export default function GitHubStats({ user, cacheBuster = "" }: GitHubStatsProps
             <div className={styles.contribCard}>
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
-                src={`https://ghchart.rshah.org/${titleColor}/${USERNAME}?v=${cacheBuster}`}
+                src={`https://ghchart.rshah.org/${titleColor}/${USERNAME}`}
                 alt={`${user.name ?? USERNAME} GitHub contribution chart`}
                 className={`${styles.contribImg} ${!isLight ? styles.contribImgDark : ""}`}
                 loading="lazy"
@@ -154,7 +153,7 @@ export default function GitHubStats({ user, cacheBuster = "" }: GitHubStatsProps
             <h3 className={styles.imgTitle}>Streak Stats</h3>
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
-              src={`https://streak-stats.demolab.com?user=${USERNAME}&theme=transparent&background=060d1a00&ring=${titleColor}&fire=${titleColor}&currStreakLabel=${titleColor}&sideNums=${sideNumsColor}&currStreakNum=${sideNumsColor}&sideLabels=${textColor}&dates=${datesColor}&border=${borderColor}&border_radius=0&v=${cacheBuster}`}
+              src={`https://streak-stats.demolab.com?user=${USERNAME}&theme=transparent&background=060d1a00&ring=${titleColor}&fire=${titleColor}&currStreakLabel=${titleColor}&sideNums=${sideNumsColor}&currStreakNum=${sideNumsColor}&sideLabels=${textColor}&dates=${datesColor}&border=${borderColor}&border_radius=0`}
               alt={`${user.name ?? USERNAME} GitHub streak stats`}
               className={styles.streakImg}
               loading="lazy"

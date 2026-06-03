@@ -7,14 +7,13 @@ import Projects from "@/components/Projects";
 import GitHubStats from "@/components/GitHubStats";
 import Contact from "@/components/Contact";
 
-export const revalidate = 60; // Revalidate every 60 seconds
+export const revalidate = 0; // Disable cache
 
 export default async function Home() {
   const [user, repos] = await Promise.all([
     getGitHubUser(),
     getGitHubRepos(),
   ]);
-  const cacheBuster = Math.floor(Date.now() / (5 * 60 * 1000)).toString();
 
   return (
     <>
@@ -31,7 +30,7 @@ export default async function Home() {
         </Suspense>
 
         <Suspense fallback={<div style={{ height: "40rem" }} />}>
-          <GitHubStats user={user} cacheBuster={cacheBuster} />
+          <GitHubStats user={user} />
         </Suspense>
       </main>
 

@@ -86,7 +86,7 @@ async function getContributedRepos(): Promise<GitHubRepo[]> {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({ query }),
-      next: { revalidate: 60 }
+      cache: 'no-store'
     });
 
     if (!res.ok) return [];
@@ -119,7 +119,7 @@ async function getContributedRepos(): Promise<GitHubRepo[]> {
 export async function getGitHubUser(): Promise<GitHubUser> {
   const res = await fetch(`${BASE_URL}/users/${GITHUB_USERNAME}`, {
     headers: getHeaders(),
-    next: { revalidate: 60 },
+    cache: 'no-store',
   });
   if (!res.ok) throw new Error("Failed to fetch GitHub user");
   return res.json();
@@ -130,7 +130,7 @@ export async function getGitHubRepos(): Promise<GitHubRepo[]> {
     `${BASE_URL}/users/${GITHUB_USERNAME}/repos?sort=updated&per_page=50`,
     {
       headers: getHeaders(),
-      next: { revalidate: 60 },
+      cache: 'no-store',
     }
   );
   if (!res.ok) throw new Error("Failed to fetch GitHub repos");
