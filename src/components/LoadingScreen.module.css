@@ -95,15 +95,41 @@
 }
 
 /* ── Subtitle ────────────────────────────────────────────── */
-.subtitle {
+.subtitleWrap {
+  position: relative;
+  height: 1.2rem;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  opacity: 0;
+  animation: fadeUp 0.6s ease 0.9s both;
+}
+
+.subtitleText {
+  position: absolute;
   font-size: 0.8rem;
   font-weight: 600;
   letter-spacing: 0.4em;
   text-transform: uppercase;
-  /* color set via inline style */
-  opacity: 0;
-  animation: fadeUp 0.6s ease 0.9s both;
   margin: 0;
+  transition: opacity 0.6s cubic-bezier(0.34, 1.56, 0.64, 1),
+              transform 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.hiddenUp {
+  opacity: 0;
+  transform: translateY(-12px);
+}
+
+.hiddenDown {
+  opacity: 0;
+  transform: translateY(12px);
 }
 
 @keyframes fadeUp {

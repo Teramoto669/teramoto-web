@@ -14,16 +14,22 @@ const USERNAME = "Teramoto669";
 
 export default function GitHubStats({ user }: GitHubStatsProps) {
   const { theme } = useTheme();
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
   const joinYear = new Date(user.created_at).getFullYear();
   const yearsOnGitHub = new Date().getFullYear() - joinYear;
   
-  const isLight = theme === "light";
+  const isLight = mounted && theme === "light";
   
   // Dynamic API Colors
   const titleColor = isLight ? "35858E" : "24B1B1";
-  const textColor = isLight ? "3b5a5e" : "FFE0C5";
+  const textColor = isLight ? "223a3d" : "FFE0C5";
   const iconColor = isLight ? "35858E" : "24B1B1";
-  const datesColor = isLight ? "5e8185" : "6a9999";
+  const datesColor = isLight ? "3b5a5e" : "6a9999";
   const sideNumsColor = isLight ? "1a2e30" : "FFF0E4";
   const borderColor = isLight ? "35858E4D" : "004d4d";
 

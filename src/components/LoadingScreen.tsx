@@ -192,9 +192,9 @@ export default function LoadingScreen() {
             style={{ background: `linear-gradient(90deg, transparent, ${p.accent})` }}
           />
           <h1 className={styles.name}>
-            {(phase === "loading" ? "Loading" : "Complete").split("").map((c, i) => (
+            {"PORTOFOLIO".split("").map((c, i) => (
               <span
-                key={phase === "loading" ? `load-${i}` : `done-${i}`}
+                key={`portfolio-${i}`}
                 style={{
                   animationDelay: `${i * 0.07}s`,
                   backgroundImage: `linear-gradient(135deg, ${p.text} 0%, ${p.accent} 100%)`,
@@ -213,7 +213,24 @@ export default function LoadingScreen() {
           />
         </div>
 
-        <p className={styles.subtitle} style={{ color: p.subtitle }}>Portfolio</p>
+        <div className={styles.subtitleWrap}>
+          <span
+            className={`${styles.subtitleText} ${
+              phase === "loading" ? styles.visible : styles.hiddenUp
+            }`}
+            style={{ color: p.subtitle }}
+          >
+            LOADING...
+          </span>
+          <span
+            className={`${styles.subtitleText} ${
+              phase !== "loading" ? styles.visible : styles.hiddenDown
+            }`}
+            style={{ color: p.subtitle }}
+          >
+            READY
+          </span>
+        </div>
 
         {/* Loading bar */}
         <div
