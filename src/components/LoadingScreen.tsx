@@ -148,7 +148,7 @@ export default function LoadingScreen() {
     if (!audioRef.current) {
       const audio = new Audio("/bgm.mp3");
       audio.loop = true;
-      audio.volume = 0.65;
+      audio.volume = 0.40;
       audioRef.current = audio;
     }
     audioRef.current.play().catch(() => { });
@@ -215,17 +215,15 @@ export default function LoadingScreen() {
 
         <div className={styles.subtitleWrap}>
           <span
-            className={`${styles.subtitleText} ${
-              phase === "loading" ? styles.visible : styles.hiddenUp
-            }`}
+            className={`${styles.subtitleText} ${phase === "loading" ? styles.visible : styles.hiddenUp
+              }`}
             style={{ color: p.subtitle }}
           >
             LOADING...
           </span>
           <span
-            className={`${styles.subtitleText} ${
-              phase !== "loading" ? styles.visible : styles.hiddenDown
-            }`}
+            className={`${styles.subtitleText} ${phase !== "loading" ? styles.visible : styles.hiddenDown
+              }`}
             style={{ color: p.subtitle }}
           >
             READY
