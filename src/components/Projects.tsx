@@ -13,7 +13,7 @@ interface ProjectsProps {
 
 const OWNER = "Teramoto669";
 
-const PINNED_REPOS = ["Web-Aonime", "anikoto-scrap-api", "teramoto-web"];
+const PINNED_REPOS = ["Web-Aonime", "anikoto-API", "teramoto-web"];
 
 const CUSTOM_DESCRIPTIONS: Record<string, string> = {
   "Web-Aonime": "A modern web application for streaming and discovering anime, built with TypeScript.",
